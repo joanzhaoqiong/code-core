@@ -11,12 +11,10 @@ public class shortLinkServiceImpl implements ShortLinkService {
     @Override
     public String generateShortLink(String originalUrl, Integer expireDays) {
 
-
-      //这个方法是根据长码生成不同额短码，并且将这条数据保存起来
         if(originalUrl==null ||originalUrl.length()==0){
-            return "请输入正确的长链接";
+            return"请输入正确的长链接";
         }
-        String code=getGeneralCode(originalUrl);
+        String code=getGernalCode(originalUrl);
         return code;
     }
 
@@ -24,17 +22,13 @@ public class shortLinkServiceImpl implements ShortLinkService {
     public String getOriginalUrl(String code) {
         return "";
     }
-
-   //实现获取短短码的方法
-    public String getGeneralCode(String originalUrl){
-        ShortLinkMapper shortLinkMapper = null;
-        String code = "";
-        for(int i=0;i<3;i++){
-            code = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
-            if(shortLinkMapper.selectById(code)==null){break;}
-        }
+//todo可以使用雪花算法,后期需要修改升级
+    public String getGernalCode(String originalUrl){
+        String code= UUID.randomUUID().toString().replace("-","");
         return code;
     }
+
+
 
 
 }
